@@ -24,25 +24,25 @@ export const initialNodes = [
 ];
 
 export const initialEdges = [
-    {
-        id: "n1-n2",
-        source: "n1",
-        target: "n2",
-        markerEnd: { type: MarkerType.ArrowClosed, color: "#007bff" },
-        style: { stroke: "#007bff" },
-    },
-    {
-        id: "n2-add-service",
-        source: "n2",
-        target: "add-service",
-        markerEnd: { type: MarkerType.ArrowClosed, color: "#007bff" },
-        style: { stroke: "#007bff" },
-    },
-    {
-        id: "add-service-n4",
-        source: "add-service",
-        target: "n4",
-        markerEnd: { type: MarkerType.ArrowClosed, color: "#007bff" },
-        style: { stroke: "#007bff" },
-    },
+  {
+    id: "n1-n2",
+    source: "n1",
+    target: "n2",
+    markerEnd: { type: MarkerType.ArrowClosed, color: "#FC0AEC" },
+    style: { stroke: "#FC0AEC" },
+  },
+  {
+    id: "n2-add-service",
+    source: "n2",
+    target: "add-service",
+    markerEnd: { type: MarkerType.ArrowClosed, color: "#FC0AEC" },
+    style: { stroke: "#FC0AEC" },
+  },
+  {
+    id: "add-service-n4",
+    source: "add-service",
+    target: "n4",
+    markerEnd: { type: MarkerType.ArrowClosed, color: "#FC0AEC" },
+    style: { stroke: "#FC0AEC" },
+  },
 ];

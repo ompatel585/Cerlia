@@ -6,7 +6,7 @@ import Connect from "./pages/Connect.jsx";
 
 const App = () => {
   return (
-    <div className="bg-fuchsia-950">
+    <div className="bg-black">
       <Router>
         <Routes>
           <Route path="/" element={<FlowBuilder />} />

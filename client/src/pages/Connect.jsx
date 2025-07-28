@@ -1,52 +1,127 @@
-// // client/src/components/FlowBuilder/Connect.jsx
+
 // import React, { useState } from "react";
 // import { useNavigate } from "react-router-dom";
+// import RestTriggers from "../components/RestAPI/RestTriggers";
 
 // const Connect = () => {
+//   const [selectedMethods, setSelectedMethods] = useState([]);
+//   const [path, setPath] = useState("/");
+//   const [routes, setRoutes] = useState([]);
+//   const [error, setError] = useState(null);
 //   const navigate = useNavigate();
-//   const [path, setPath] = useState(`/qrCodeGen`);
-//   const [method, setMethod] = useState("POST");
 
-//   const handleConnect = () => {
-//     console.log("Connecting API with:", { path, method });
-//     // 🔁 You can send data to backend here (e.g., axios.post(...))
-//     navigate("/"); // Go back to FlowBuilder
+//   const methods = ["GET", "POST", "PUT", "PATCH", "DELETE"];
+
+//   const handleToggle = (method) => {
+//     setSelectedMethods((prev) =>
+//       prev.includes(method)
+//         ? prev.filter((m) => m !== method)
+//         : [...prev, method]
+//     );
+//   };
+
+//   const handleConnect = async () => {
+//     try {
+//       const response = await fetch("http://localhost:5000/api/create-route", {
+//         method: "POST",
+//         headers: {
+//           "Content-Type": "application/json",
+//         },
+//         body: JSON.stringify({ path, methods: selectedMethods }),
+//       });
+
+//       const data = await response.json();
+//       if (response.ok) {
+//         setRoutes(data.routes);
+//         setError(null);
+//       } else {
+//         setError(data.error || "Failed to create routes");
+//       }
+//     } catch (err) {
+//       setError("Error connecting to server");
+//     }
 //   };
 
 //   return (
-//     <div className="min-h-screen flex items-center justify-center bg-[#0f0f0f] text-white">
-//       <div className="bg-[#1f1f1f] p-6 rounded shadow-lg w-[400px]">
-//         <h2 className="text-xl font-semibold mb-3">REST API Call</h2>
-//         <p className="text-sm text-gray-400 mb-4">
-//           Create an API / HTTP endpoint as the trigger for your workflow.
+//     <div className="min-h-screen text-white px-4 py-6">
+//       <div className="flex flex-col justify-center items-center mb-6 text-center">
+//         <h1 className="text-3xl font-bold">API Endpoint</h1>
+//         <p className="text-xl">
+//           Define Path and HTTP method to test API instantly
 //         </p>
+//       </div>
 
-//         <label className="block text-sm mb-1">Path</label>
-//         <input
-//           value={path}
-//           onChange={(e) => setPath(e.target.value)}
-//           className="w-full mb-4 p-2 bg-gray-800 rounded border border-gray-600"
-//         />
+//       <div className="flex flex-col md:flex-row gap-6">
+//         {/* Left Sidebar */}
+//         <div className="md:w-1/3 w-full">
+//           <RestTriggers routes={routes} />
+//         </div>
 
-//         <label className="block text-sm mb-1">Method</label>
-//         <select
-//           value={method}
-//           onChange={(e) => setMethod(e.target.value)}
-//           className="w-full mb-4 p-2 bg-gray-800 rounded border border-gray-600"
-//         >
-//           <option value="GET">GET</option>
-//           <option value="POST">POST</option>
-//           <option value="PUT">PUT</option>
-//           <option value="DELETE">DELETE</option>
-//           <option value="PATCH">PATCH</option>
-//         </select>
+//         {/* Right Content */}
+//         <div className="flex flex-col w-full md:w-2/3 gap-4">
+//           <div>
+//             <h2 className="text-xl font-semibold mb-2">Your API Endpoints</h2>
+//           </div>
 
-//         <button
-//           onClick={handleConnect}
-//           className="w-full bg-blue-600 py-2 rounded hover:bg-blue-500"
-//         >
-//           Connect
-//         </button>
+//           <div>
+//             <label className="mr-2">Path</label>
+//             <input
+//               type="text"
+//               value={path}
+//               onChange={(e) => setPath(e.target.value)}
+//               className="border border-white bg-transparent text-white px-2 py-1 rounded w-full md:w-[300px]"
+//             />
+//           </div>
+
+//           <div className="">
+//             <p className="font-medium text-lg mb-2">Method</p>
+//             <div className="flex flex-col gap-2">
+//               {methods.map((method) => (
+//                 <label
+//                   key={method}
+//                   className={`flex items-center gap-3 cursor-pointer px-3 py-2 rounded-md transition-all
+//                     ${
+//                       selectedMethods.includes(method)
+//                         ? "bg-blue-600 text-white shadow"
+//                         : "bg-gray-800 hover:bg-gray-700"
+//                     }`}
+//                 >
+//                   <input
+//                     type="checkbox"
+//                     checked={selectedMethods.includes(method)}
+//                     onChange={() => handleToggle(method)}
+//                     className="accent-blue-500 h-4 w-4"
+//                   />
+//                   <span className="font-medium">{method}</span>
+//                 </label>
+//               ))}
+//             </div>
+//           </div>
+
+//           <div>
+//             <button
+//               onClick={handleConnect}
+//               className="bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded mt-4 font-semibold shadow"
+//             >
+//               Connect
+//             </button>
+//           </div>
+
+//           {error && <div className="text-red-500 mt-4">{error}</div>}
+
+//           {routes.length > 0 && (
+//             <div className="mt-4">
+//               <h3 className="text-lg font-semibold">Created Routes:</h3>
+//               <ul className="list-disc pl-5">
+//                 {routes.map((route, index) => (
+//                   <li key={index}>
+//                     {route.method}: {route.url}
+//                   </li>
+//                 ))}
+//               </ul>
+//             </div>
+//           )}
+//         </div>
 //       </div>
 //     </div>
 //   );
@@ -55,56 +130,16 @@
 // export default Connect;
 
 
-// import React, { useState } from "react";
-// import { useNavigate } from "react-router-dom";
-// import RestTriggers from "../components/RestAPI/RestTriggers";
-
-// const Connect = () => {
-//   return (
-//     <div className="min-h-screen text-white ">
-//       <div className="flex flex-col justify-center items-center pt-4 ">
-//         <h1 className="text-3xl">API Endpoint</h1>
-//         <p className="text-xl">
-//           Define Path and http method to test api instantly
-//         </p>
-//       </div>
-//       <div className="flex">
-//         <div className="w-[30%]">
-//           <RestTriggers />
-//         </div>
-//         <div className="flex flex-col">
-//           <div>
-//             <h1>Your API Endpoints</h1>
-//           </div>
-//           <div className="">
-//             <label className="mr-2">Path</label>
-//             <input type="text" value={" /"} className="border border-white" />
-//           </div>
-//           <div className="gap-y-2 my-3">
-//             <p>Method</p>
-//             <div className="mx-3">
-//               <p>GET</p>
-//               <p>POST</p>
-//               <p>PUT</p>
-//               <p>PATCH</p>
-//               <p>DELETE</p>
-//             </div>
-//           </div>
-//         </div>
-//       </div>
-//     </div>
-//   );
-// }
-
-// export default Connect
-
-
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import RestTriggers from "../components/RestAPI/RestTriggers";
 
 const Connect = () => {
   const [selectedMethods, setSelectedMethods] = useState([]);
+  const [path, setPath] = useState("/"); // keep full path including "/"
+  const [routes, setRoutes] = useState([]);
+  const [error, setError] = useState(null);
+  const navigate = useNavigate();
 
   const methods = ["GET", "POST", "PUT", "PATCH", "DELETE"];
 
@@ -116,44 +151,81 @@ const Connect = () => {
     );
   };
 
+  const handlePathChange = (e) => {
+    const input = e.target.value;
+
+    // Prevent deletion of leading "/"
+    if (!input.startsWith("/")) return;
+
+    // Prevent user from deleting "/" completely
+    setPath("/" + input.slice(1));
+  };
+
+  const handleConnect = async () => {
+    try {
+      const response = await fetch("http://localhost:5000/api/create-route", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ path, methods: selectedMethods }),
+      });
+
+      const data = await response.json();
+      if (response.ok) {
+        setRoutes(data.routes);
+        setError(null);
+      } else {
+        setError(data.error || "Failed to create routes");
+      }
+    } catch (err) {
+      setError("Error connecting to server");
+    }
+  };
+
   return (
-    <div className="min-h-screen text-white">
-      <div className="flex flex-col justify-center items-center pt-4">
-        <h1 className="text-3xl">API Endpoint</h1>
+    <div className="min-h-screen text-white px-4 py-6">
+      <div className="flex flex-col justify-center items-center mb-6 text-center">
+        <h1 className="text-3xl font-bold">API Endpoint</h1>
         <p className="text-xl">
-          Define Path and http method to test api instantly
+          Define Path and HTTP method to test API instantly
         </p>
       </div>
-      <div className="flex px-6">
-        <div className="w-[30%]">
-          <RestTriggers />
+
+      <div className="flex flex-col md:flex-row gap-6">
+        {/* Left Sidebar */}
+        <div className="md:w-1/3 w-full">
+          <RestTriggers routes={routes} />
         </div>
 
-        <div className="flex flex-col">
+        {/* Right Content */}
+        <div className="flex flex-col w-full md:w-2/3 gap-4">
           <div>
-            <h1 className="text-xl font-semibold mb-2">Your API Endpoints</h1>
+            <h2 className="text-xl font-semibold mb-2">Your API Endpoints</h2>
           </div>
 
-          <div className="mb-4">
+          <div>
             <label className="mr-2">Path</label>
             <input
               type="text"
-              value={"/"}
-              className="border border-white bg-transparent text-white px-2 py-1 rounded"
+              value={path}
+              onChange={handlePathChange}
+              className="border border-white bg-transparent text-white px-2 py-1 rounded w-full md:w-[300px]"
+              placeholder="/example"
             />
           </div>
 
-          <div className="gap-y-2 my-3">
-            <p className="font-medium text-lg">Method</p>
-            <div className="mx-3 flex flex-col gap-2">
+          <div>
+            <p className="font-medium text-lg mb-2">Method</p>
+            <div className="flex flex-col gap-2">
               {methods.map((method) => (
                 <label
                   key={method}
-                  className={`flex items-center gap-2 cursor-pointer px-3 py-2 rounded-md transition-all 
+                  className={`flex items-center gap-3 cursor-pointer px-3 py-2 rounded-md transition-all
                     ${
                       selectedMethods.includes(method)
                         ? "bg-blue-600 text-white shadow"
-                        : "bg-transparent hover:bg-gray-800"
+                        : "bg-gray-800 hover:bg-gray-700"
                     }`}
                 >
                   <input
@@ -162,11 +234,35 @@ const Connect = () => {
                     onChange={() => handleToggle(method)}
                     className="accent-blue-500 h-4 w-4"
                   />
-                  {method}
+                  <span className="font-medium">{method}</span>
                 </label>
               ))}
             </div>
           </div>
+
+          <div>
+            <button
+              onClick={handleConnect}
+              className="bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded mt-4 font-semibold shadow"
+            >
+              Connect
+            </button>
+          </div>
+
+          {error && <div className="text-red-500 mt-4">{error}</div>}
+
+          {routes.length > 0 && (
+            <div className="mt-4">
+              <h3 className="text-lg font-semibold">Created Routes:</h3>
+              <ul className="list-disc pl-5">
+                {routes.map((route, index) => (
+                  <li key={index}>
+                    {route.method}: {route.url}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
         </div>
       </div>
     </div>

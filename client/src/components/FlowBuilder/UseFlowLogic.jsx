@@ -66,15 +66,15 @@ export const useFlowLogic = () => {
           id: `add-service-${newServiceId}`,
           source: "add-service",
           target: newServiceId,
-          markerEnd: { type: MarkerType.ArrowClosed, color: "#007bff" },
-          style: { stroke: "#007bff" },
+          markerEnd: { type: MarkerType.ArrowClosed, color: "#FC0AEC" },
+          style: { stroke: "#FC0AEC" },
         });
         updatedEdges.push({
           id: `${newServiceId}-n4`,
           source: newServiceId,
           target: "n4",
-          markerEnd: { type: MarkerType.ArrowClosed, color: "#007bff" },
-          style: { stroke: "#007bff" },
+          markerEnd: { type: MarkerType.ArrowClosed, color: "#FC0AEC" },
+          style: { stroke: "#FC0AEC" },
         });
       } else {
         updatedEdges.push(edge);
